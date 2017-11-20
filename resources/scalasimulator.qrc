@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>scene.fbx</file>
+        <file>Render.frag</file>
+        <file>Render.vert</file>
+        <file>RayCast.frag</file>
+        <file>RayCast.geom</file>
+        <file>RayCast.vert</file>
+        <file>Render.geom</file>
+    </qresource>
+</RCC>
