@@ -7,5 +7,6 @@
         <file>RayCast.geom</file>
         <file>RayCast.vert</file>
         <file>Render.geom</file>
+        <file>Compute.comp</file>
     </qresource>
 </RCC>

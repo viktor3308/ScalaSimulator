@@ -18,6 +18,7 @@ public:
         Point0 = 0,
         Point1,
         Point2,
+        IntersectionPoint,
         Depth,
         AttachmentsCount
     };

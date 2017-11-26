@@ -1,4 +1,4 @@
-#include "simulatorsceneentity.h"
+#include "SimulatorSceneEntity.h"
 #include "RayCastEffect.h"
 
 #include <Qt3DRender/QSceneLoader>
@@ -16,7 +16,7 @@ SimulatorSceneEntity::SimulatorSceneEntity(Qt3DCore::QNode* parent):
     m_sceneLoader->setSource(QUrl(QStringLiteral("qrc:/scene.fbx")));
 }
 
-RayCastEffect*SimulatorSceneEntity::effect() const
+RayCastEffect* SimulatorSceneEntity::effect() const
 {
     return m_effect;
 }

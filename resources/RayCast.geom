@@ -4,10 +4,13 @@ layout (triangle_strip, max_vertices = 3) out;
 
 in vec3 positionWorld[];
 in vec3 positionView[];
+in vec3 eyePositionv[];
+in vec3 eyeNormalv[];
 
 flat out vec3 point0g;
 flat out vec3 point1g;
 flat out vec3 point2g;
+flat out vec3 intersectiong;
 
 float sign (vec2 p1, vec2 p2, vec2 p3)
 {
@@ -32,9 +35,16 @@ void main()
 
     if(pointInTriangle(hitPoint, positionView[0].xy, positionView[1].xy, positionView[2].xy))
     {
+        vec3 normal = cross(positionWorld[1] - positionWorld[0], positionWorld[2] - positionWorld[0]);
+        normal = normalize(normal);
+
+        float param = dot(normal, positionWorld[0] - eyePositionv[0]) / dot(normal, eyeNormalv[0]);
+        vec3 intersectionPoint = eyePositionv[0] + eyeNormalv[0] * param;
+
         point0g = positionWorld[0];
         point1g = positionWorld[1];
         point2g = positionWorld[2];
+        intersectiong = intersectionPoint;
 
         gl_Position = vec4(1.0f, -1.0f, gl_in[0].gl_Position.zw);
         EmitVertex();
@@ -42,12 +52,14 @@ void main()
         point0g = positionWorld[0];
         point1g = positionWorld[1];
         point2g = positionWorld[2];
+        intersectiong = intersectionPoint;
         gl_Position = vec4(0.0f, 1.0f, gl_in[1].gl_Position.zw);
         EmitVertex();
 
         point0g = positionWorld[0];
         point1g = positionWorld[1];
         point2g = positionWorld[2];
+        intersectiong = intersectionPoint;
         gl_Position = vec4(-1.0f, -1.0f, gl_in[2].gl_Position.zw);
         EmitVertex();
 

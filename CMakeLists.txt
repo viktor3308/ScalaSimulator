@@ -15,6 +15,10 @@ set(HEADERS
     ${INCLUDE_DIR}/RayCastBuffer.h
     ${INCLUDE_DIR}/RayCastEffect.h
     ${INCLUDE_DIR}/SimulatorRenderer.h
+    ${INCLUDE_DIR}/ComputeEffect.h
+    ${INCLUDE_DIR}/ComputeEntity.h
+    ${INCLUDE_DIR}/ComputeRenderBrunch.h
+    ${INCLUDE_DIR}/ScalaEntity.h
    )
 
 include_directories(${INCLUDE_DIR})
@@ -27,6 +31,10 @@ set(SOURCES
     ${SOURCE_DIR}/RayCastBuffer.cpp
     ${SOURCE_DIR}/RayCastEffect.cpp
     ${SOURCE_DIR}/SimulatorRenderer.cpp
+    ${SOURCE_DIR}/ComputeEffect.cpp
+    ${SOURCE_DIR}/ComputeEntity.cpp
+    ${SOURCE_DIR}/ComputeRenderBrunch.cpp
+    ${SOURCE_DIR}/ScalaEntity.cpp
    )
 
 set(RESOURCE_DIR resources)

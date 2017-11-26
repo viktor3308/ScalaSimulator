@@ -12,6 +12,7 @@ RayCastBuffer::RayCastBuffer(Qt3DCore::QNode* parent):
         Qt3DRender::QAbstractTexture::RGB32F,
         Qt3DRender::QAbstractTexture::RGB32F,
         Qt3DRender::QAbstractTexture::RGB32F,
+        Qt3DRender::QAbstractTexture::RGB32F,
         Qt3DRender::QAbstractTexture::D32F
     };
 
@@ -20,6 +21,7 @@ RayCastBuffer::RayCastBuffer(Qt3DCore::QNode* parent):
         Qt3DRender::QRenderTargetOutput::Color0,
         Qt3DRender::QRenderTargetOutput::Color1,
         Qt3DRender::QRenderTargetOutput::Color2,
+        Qt3DRender::QRenderTargetOutput::Color3,
         Qt3DRender::QRenderTargetOutput::Depth
     };
 

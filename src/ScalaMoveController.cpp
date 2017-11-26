@@ -1,4 +1,5 @@
-#include "scalamovecontroller.h"
+#include "ScalaMoveController.h"
+#include "ScalaEntity.h"
 
 #include <Qt3DInput/QAction>
 #include <Qt3DInput/QActionInput>
@@ -12,21 +13,26 @@
 #include <Qt3DInput/QMouseEvent>
 #include <Qt3DRender/QCamera>
 
-ScalaMoveController::ScalaMoveController(Qt3DCore::QNode* parent):
+ScalaMoveController::ScalaMoveController(ScalaEntity* scala, Qt3DCore::QNode* parent):
     Qt3DCore::QEntity(parent),
+    m_scala(scala),
     m_camera(nullptr),
     m_viewXAxis(new Qt3DInput::QAxis()),
     m_viewYAxis(new Qt3DInput::QAxis()),
     m_linearMoveAxis(new Qt3DInput::QAxis()),
+    m_rotateAxis(new Qt3DInput::QAxis()),
     m_mouseXInput(new Qt3DInput::QAnalogAxisInput()),
     m_mouseYInput(new Qt3DInput::QAnalogAxisInput()),
     m_keyboardForwardInput(new Qt3DInput::QButtonAxisInput()),
     m_keyboardBackwardInput(new Qt3DInput::QButtonAxisInput()),
+    m_keyboardLeftInput(new Qt3DInput::QButtonAxisInput()),
+    m_keyboardRightInput(new Qt3DInput::QButtonAxisInput()),
     m_mouseDevice(new Qt3DInput::QMouseDevice()),
     m_keyboardDevice(new Qt3DInput::QKeyboardDevice()),
     m_logicalDevice(new Qt3DInput::QLogicalDevice()),
     m_frameAction(new Qt3DLogic::QFrameAction()),
     m_linearSpeed(10.0f),
+    m_rotationSpeed(10.0f),
     m_lookSpeed(180.0f)
 {
     m_mouseXInput->setAxis(Qt3DInput::QMouseDevice::X);
@@ -47,9 +53,20 @@ ScalaMoveController::ScalaMoveController(Qt3DCore::QNode* parent):
     m_keyboardBackwardInput->setSourceDevice(m_keyboardDevice);
     m_linearMoveAxis->addInput(m_keyboardBackwardInput);
 
+    m_keyboardLeftInput->setButtons(QVector<int>() << Qt::Key_Left);
+    m_keyboardLeftInput->setScale(-1.0f);
+    m_keyboardLeftInput->setSourceDevice(m_keyboardDevice);
+    m_rotateAxis->addInput(m_keyboardLeftInput);
+
+    m_keyboardRightInput->setButtons(QVector<int>() << Qt::Key_Right);
+    m_keyboardRightInput->setScale(1.0f);
+    m_keyboardRightInput->setSourceDevice(m_keyboardDevice);
+    m_rotateAxis->addInput(m_keyboardRightInput);
+
     m_logicalDevice->addAxis(m_viewXAxis);
     m_logicalDevice->addAxis(m_viewYAxis);
     m_logicalDevice->addAxis(m_linearMoveAxis);
+    m_logicalDevice->addAxis(m_rotateAxis);
 
     QObject::connect(m_frameAction, SIGNAL(triggered(float)),
                      this, SLOT(onTriggered(float)));
@@ -76,7 +93,13 @@ void ScalaMoveController::onTriggered(float dt)
         if(normalizedMoveVector.isNull())
             return;
 
-        m_camera->translateWorld(normalizedMoveVector * m_linearMoveAxis->value() * m_linearSpeed * dt);
+        //m_camera->translateWorld(normalizedMoveVector * m_linearMoveAxis->value() * m_linearSpeed * dt);
+        m_scala->move(m_linearMoveAxis->value() * m_linearSpeed * dt);
+    }
+
+    if(m_rotateAxis->value() != 0.0f)
+    {
+        m_scala->rotate(m_rotateAxis->value() * m_rotationSpeed * dt);
     }
 
     static const QVector3D upVector(0.0f, 1.0f, 0.0f);
@@ -87,5 +110,6 @@ void ScalaMoveController::onTriggered(float dt)
 
 void ScalaMoveController::setCamera(Qt3DRender::QCamera* camera)
 {
+    m_scala->setViewCamera(camera);
     m_camera = camera;
 }
