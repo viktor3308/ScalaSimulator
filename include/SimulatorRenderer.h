@@ -17,10 +17,12 @@ namespace Qt3DRender
     class QRenderTargetSelector;
     class QClearBuffers;
     class QCameraSelector;
+    class QNoDraw;
 }
 
 class SimulatorRenderer: public Qt3DRender::QViewport
 {
+    Q_OBJECT
 public:
     explicit SimulatorRenderer(Qt3DCore::QNode *parent = 0);
 
@@ -37,14 +39,12 @@ public:
         connect(m_computeBuffer, &Qt3DRender::QBuffer::dataChanged, receiver, method);
     }
 
-    void onComputeBufferChanged(const QByteArray &bytes);
-
 private:
     Qt3DRender::QRenderSurfaceSelector *m_surfaceSelector;
+    Qt3DRender::QCameraSelector *m_rayCastCameraSelector;
     Qt3DRender::QRenderPassFilter *m_rayCastPassFilter;
     Qt3DRender::QRenderTargetSelector *m_rayCastBufferTargetSelector;
     Qt3DRender::QClearBuffers *m_clearRayCastBuffer;
-    Qt3DRender::QCameraSelector *m_rayCastCameraSelector;
 
     ComputeRenderBrunch *m_computeRenderBrunch;
 

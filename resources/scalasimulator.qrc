@@ -8,5 +8,8 @@
         <file>RayCast.vert</file>
         <file>Render.geom</file>
         <file>Compute.comp</file>
+        <file>RenderRay.geom</file>
+        <file>RenderRay.vert</file>
+        <file>RenderRay.frag</file>
     </qresource>
 </RCC>

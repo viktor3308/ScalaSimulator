@@ -43,7 +43,7 @@ int main(int ac, char **av)
     renderer->connectToComputeBufferChanged(scalaEntity, &ScalaEntity::onComputeBufferChanged);
 
     view.setActiveFrameGraph(renderer);
-    //view.renderSettings()->setRenderPolicy(Qt3DRender::QRenderSettings::Always);
+    view.renderSettings()->setRenderPolicy(Qt3DRender::QRenderSettings::Always);
 
     view.setRootEntity(sceneRoot);
     view.show();

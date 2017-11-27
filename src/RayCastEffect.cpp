@@ -14,6 +14,7 @@ RayCastEffect::RayCastEffect(Qt3DCore::QNode* parent):
     m_technique(new Qt3DRender::QTechnique()),
     m_rayCastPass(new Qt3DRender::QRenderPass()),
     m_renderPass(new Qt3DRender::QRenderPass()),
+    m_renderRayPass(new Qt3DRender::QRenderPass()),
     m_rayCastCriterion(new Qt3DRender::QFilterKey(this)),
     m_renderCriterion(new Qt3DRender::QFilterKey(this)),
 
@@ -50,6 +51,15 @@ RayCastEffect::RayCastEffect(Qt3DCore::QNode* parent):
 
     m_renderPass->setShaderProgram(renderShader);
     m_technique->addRenderPass(m_renderPass);
+
+    m_renderRayPass->addFilterKey(m_renderCriterion);
+    Qt3DRender::QShaderProgram* renderRayShader = new Qt3DRender::QShaderProgram();
+    renderRayShader->setVertexShaderCode(Qt3DRender::QShaderProgram::loadSource(QUrl(QStringLiteral("qrc:/RenderRay.vert"))));
+    renderRayShader->setFragmentShaderCode(Qt3DRender::QShaderProgram::loadSource(QUrl(QStringLiteral("qrc:/RenderRay.frag"))));
+    renderRayShader->setGeometryShaderCode(Qt3DRender::QShaderProgram::loadSource(QUrl(QStringLiteral("qrc:/RenderRay.geom"))));
+
+    m_renderRayPass->setShaderProgram(renderRayShader);
+    m_technique->addRenderPass(m_renderRayPass);
 
     addTechnique(m_technique);
 

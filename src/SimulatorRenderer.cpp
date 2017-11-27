@@ -10,6 +10,7 @@
 #include <Qt3DRender/QFilterKey>
 #include <Qt3DRender/QParameter>
 #include <Qt3DRender/QBuffer>
+#include <Qt3DRender/QNoDraw>
 #include <QWindow>
 #include <QVector3D>
 #include <QVector4D>
@@ -17,12 +18,12 @@
 SimulatorRenderer::SimulatorRenderer(Qt3DCore::QNode* parent):
     Qt3DRender::QViewport(parent),
     m_surfaceSelector(new Qt3DRender::QRenderSurfaceSelector(this)),
-    m_rayCastPassFilter(new Qt3DRender::QRenderPassFilter(m_surfaceSelector)),
+    m_rayCastCameraSelector(new Qt3DRender::QCameraSelector(m_surfaceSelector)),
+    m_rayCastPassFilter(new Qt3DRender::QRenderPassFilter(m_rayCastCameraSelector)),
     m_rayCastBufferTargetSelector(new Qt3DRender::QRenderTargetSelector(m_rayCastPassFilter)),
     m_clearRayCastBuffer(new Qt3DRender::QClearBuffers(m_rayCastBufferTargetSelector)),
-    m_rayCastCameraSelector(new Qt3DRender::QCameraSelector(m_clearRayCastBuffer)),
 
-    m_computeRenderBrunch(new ComputeRenderBrunch(m_surfaceSelector)),
+    m_computeRenderBrunch(new ComputeRenderBrunch(m_rayCastCameraSelector)),
 
     m_renderPassFilter(new Qt3DRender::QRenderPassFilter(m_surfaceSelector)),
     m_clearRender(new Qt3DRender::QClearBuffers(m_renderPassFilter)),
@@ -40,9 +41,9 @@ SimulatorRenderer::SimulatorRenderer(Qt3DCore::QNode* parent):
     m_computeBuffer->setAccessType(Qt3DRender::QBuffer::ReadWrite);
 
     QByteArray bufferDataArray;
-    bufferDataArray.resize(4 * sizeof(QVector4D));
+    bufferDataArray.resize(5 * sizeof(QVector4D));
     QVector4D *posData = reinterpret_cast<QVector4D *>(bufferDataArray.data());
-    for (int j = 0; j < 4; ++j) {
+    for (int j = 0; j < 5; ++j) {
         *posData = QVector4D(0,0,0,0);
         qDebug() << "X: " << (*posData).x() << " Y: " << (*posData).y()  << " Z: " << (*posData).z();
         ++posData;
@@ -53,12 +54,14 @@ SimulatorRenderer::SimulatorRenderer(Qt3DCore::QNode* parent):
     m_computeRenderBrunch->addParameter(new Qt3DRender::QParameter(QStringLiteral("point1"), m_rayCastBuffer->getTexture(RayCastBuffer::Point1)));
     m_computeRenderBrunch->addParameter(new Qt3DRender::QParameter(QStringLiteral("point2"), m_rayCastBuffer->getTexture(RayCastBuffer::Point2)));
     m_computeRenderBrunch->addParameter(new Qt3DRender::QParameter(QStringLiteral("intersection"), m_rayCastBuffer->getTexture(RayCastBuffer::IntersectionPoint)));
+    m_computeRenderBrunch->addParameter(new Qt3DRender::QParameter(QStringLiteral("rayOrigin"), m_rayCastBuffer->getTexture(RayCastBuffer::RayOriginPoint)));
     m_computeRenderBrunch->addParameter(new Qt3DRender::QParameter(QStringLiteral("outBuffer"), QVariant::fromValue(m_computeBuffer)));
 
     m_renderPassFilter->addParameter(new Qt3DRender::QParameter(QStringLiteral("point0"), m_rayCastBuffer->getTexture(RayCastBuffer::Point0)));
     m_renderPassFilter->addParameter(new Qt3DRender::QParameter(QStringLiteral("point1"), m_rayCastBuffer->getTexture(RayCastBuffer::Point1)));
     m_renderPassFilter->addParameter(new Qt3DRender::QParameter(QStringLiteral("point2"), m_rayCastBuffer->getTexture(RayCastBuffer::Point2)));
     m_renderPassFilter->addParameter(new Qt3DRender::QParameter(QStringLiteral("intersection"), m_rayCastBuffer->getTexture(RayCastBuffer::IntersectionPoint)));
+    m_renderPassFilter->addParameter(new Qt3DRender::QParameter(QStringLiteral("rayOrigin"), m_rayCastBuffer->getTexture(RayCastBuffer::RayOriginPoint)));
 }
 
 void SimulatorRenderer::setSceneCamera(Qt3DCore::QEntity* camera)

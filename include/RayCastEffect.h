@@ -22,6 +22,7 @@ private:
     Qt3DRender::QTechnique *m_technique;
     Qt3DRender::QRenderPass *m_rayCastPass;
     Qt3DRender::QRenderPass *m_renderPass;
+    Qt3DRender::QRenderPass *m_renderRayPass;
     Qt3DRender::QFilterKey *m_rayCastCriterion;
     Qt3DRender::QFilterKey *m_renderCriterion;
 

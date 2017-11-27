@@ -19,6 +19,7 @@ public:
         Point1,
         Point2,
         IntersectionPoint,
+        RayOriginPoint,
         Depth,
         AttachmentsCount
     };

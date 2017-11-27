@@ -33,12 +33,8 @@ private:
 
     Qt3DRender::QCamera* m_viewCamera;
     Qt3DRender::QCamera* m_rayCamera;
-    Qt3DCore::QEntity* m_ray;
-    Qt3DCore::QTransform* m_rayTransform;
     Qt3DCore::QEntity* m_scalaBox;
     Qt3DCore::QTransform* m_scalaBoxTransform;
-    Qt3DCore::QEntity* m_intersection;
-    Qt3DCore::QTransform* m_intersectionTransform;
 
     QVector3D m_origin;
     QVector3D m_forwardVector;
