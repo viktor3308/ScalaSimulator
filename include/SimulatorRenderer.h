@@ -20,6 +20,9 @@ namespace Qt3DRender
     class QNoDraw;
 }
 
+/*!
+ * \brief FrameGraph визуализатора
+ */
 class SimulatorRenderer: public Qt3DRender::QViewport
 {
     Q_OBJECT

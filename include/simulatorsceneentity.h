@@ -10,6 +10,9 @@ namespace Qt3DRender
     class QSceneLoader;
 }
 
+/*!
+ * \brief Сущность, представляющая загружаемую сцену
+ */
 class SimulatorSceneEntity: public Qt3DCore::QEntity
 {
     Q_OBJECT
