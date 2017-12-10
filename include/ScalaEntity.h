@@ -14,6 +14,9 @@ namespace Qt3DRender
     class QCamera;
 }
 
+/*!
+ * \brief Сущность представления на сцене Scala прибора
+ */
 class ScalaEntity: public Qt3DCore::QEntity
 {
     Q_OBJECT
