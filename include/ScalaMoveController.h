@@ -29,6 +29,9 @@ namespace Qt3DInput
 
 class ScalaEntity;
 
+/*!
+ * \brief Контроллер управления scala объектом сцены и камерой
+ */
 class ScalaMoveController: public Qt3DCore::QEntity
 {
     Q_OBJECT
