@@ -9,6 +9,9 @@ namespace Qt3DRender
     class QFilterKey;
 }
 
+/*!
+ * \brief Эффект запуска шейдеров для raycasting
+ */
 class RayCastEffect : public Qt3DRender::QEffect
 {
 public:
