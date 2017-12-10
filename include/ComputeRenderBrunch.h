@@ -9,6 +9,9 @@ namespace Qt3DRender
     class QBufferCapture;
 }
 
+/*!
+ * \brief Ветвь визуализатора для запуска compute шейдера
+ */
 class ComputeRenderBrunch: public Qt3DRender::QRenderPassFilter
 {
 public:
