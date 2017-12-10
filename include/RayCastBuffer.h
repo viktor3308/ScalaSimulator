@@ -8,6 +8,9 @@ namespace Qt3DRender
     class QAbstractTexture;
 }
 
+/*!
+ * \brief Буфер для записи результатов raycasting
+ */
 class RayCastBuffer: public Qt3DRender::QRenderTarget
 {
 public:
