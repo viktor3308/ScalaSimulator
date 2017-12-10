@@ -9,6 +9,10 @@ namespace Qt3DRender
     class QFilterKey;
 }
 
+/*!
+ * \brief Класс эффекта применяющего compute шейдер.
+ * Главное назначение - получение координат точки пересечения из GPU
+ */
 class ComputeEffect : public Qt3DRender::QEffect
 {
 public:

@@ -5,6 +5,9 @@
 
 class ComputeEffect;
 
+/*!
+ * \brief Сущность для навешивания ComputeEffect
+ */
 class ComputeEntity : public Qt3DCore::QEntity
 {
 public:
