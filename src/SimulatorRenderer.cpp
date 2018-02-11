@@ -38,6 +38,7 @@ SimulatorRenderer::SimulatorRenderer(Qt3DCore::QNode* parent):
 
     m_clearRender->setBuffers(Qt3DRender::QClearBuffers::ColorDepthBuffer);
 
+    m_computeBuffer->setUsage(Qt3DRender::QBuffer::DynamicDraw);
     m_computeBuffer->setAccessType(Qt3DRender::QBuffer::ReadWrite);
 
     QByteArray bufferDataArray;
